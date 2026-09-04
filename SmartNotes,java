@@ -1,0 +1,76 @@
+import java.util.*;
+
+public class SmartNotes {
+    private static Map<String, String> notes = new LinkedHashMap<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        System.out.println("🎙️ Welcome to Voice-Controlled Smart Notes!");
+        System.out.println("Type commands like 'create', 'read', 'delete', 'list', or 'exit'.");
+        
+        while (true) {
+            System.out.print("\nCommand: ");
+            String command = scanner.nextLine().trim().toLowerCase();
+
+            switch (command) {
+                case "create":
+                    createNote();
+                    break;
+                case "read":
+                    readNote();
+                    break;
+                case "delete":
+                    deleteNote();
+                    break;
+                case "list":
+                    listNotes();
+                    break;
+                case "exit":
+                    System.out.println("👋 Goodbye! Your smart notes are safe.");
+                    return;
+                default:
+                    System.out.println("❌ Unknown command. Try again.");
+            }
+        }
+    }
+
+    private static void createNote() {
+        System.out.print("🎤 Say the title: ");
+        String title = scanner.nextLine();
+        System.out.print("📝 Say the content: ");
+        String content = scanner.nextLine();
+        notes.put(title, content);
+        System.out.println("✅ Note saved under title: " + title);
+    }
+
+    private static void readNote() {
+        System.out.print("📖 Say the title to read: ");
+        String title = scanner.nextLine();
+        if (notes.containsKey(title)) {
+            System.out.println("📌 " + title + ": " + notes.get(title));
+        } else {
+            System.out.println("⚠️ No note found with that title.");
+        }
+    }
+
+    private static void deleteNote() {
+        System.out.print("🗑️ Say the title to delete: ");
+        String title = scanner.nextLine();
+        if (notes.remove(title) != null) {
+            System.out.println("✅ Note deleted: " + title);
+        } else {
+            System.out.println("⚠️ No note found with that title.");
+        }
+    }
+
+    private static void listNotes() {
+        if (notes.isEmpty()) {
+            System.out.println("📂 No notes available.");
+        } else {
+            System.out.println("📂 Your notes:");
+            for (String title : notes.keySet()) {
+                System.out.println(" - " + title);
+            }
+        }
+    }
+}
